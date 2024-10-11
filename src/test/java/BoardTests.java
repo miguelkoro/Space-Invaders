@@ -2,16 +2,19 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import main.Board;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 //import org.junit.jupiter.api.BeforeEach;
 public class BoardTests {
     private Board board;
 
-//    @BeforeEach
+    @BeforeEach
     public void setUp(){
         board= new Board();
     }
 
-//    @test
+    @Test
     public void UpdateInit(){
         //assertEquals(board.deaths,0); //No es publica la variable
         Class c = board.getClass();
