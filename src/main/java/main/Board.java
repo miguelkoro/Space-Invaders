@@ -71,7 +71,7 @@ public class Board extends JPanel {
         timer = new Timer(Commons.DELAY, new GameCycle());
         timer.start();
 
-        gameInit();
+        gameInit();     //llamada a parametro repetida, ya se llama en Board()!!!!
     }
 
     /**
@@ -83,11 +83,11 @@ public class Board extends JPanel {
         this.aliens = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 6; j++) {
+            for (int j = 0; j < 6; j++) {   //Crea 6 aliens en horizontal en cada una de las 4 filas
 
-                var alien = new Alien(Commons.ALIEN_INIT_Y + 18 * j,
-                        Commons.ALIEN_INIT_Y + 18 * i);
-                this.aliens.add(alien);
+                var alien = new Alien(Commons.ALIEN_INIT_Y + 18 * j,    //Seria ALIEN_INIT_X!!!
+                        Commons.ALIEN_INIT_Y + 18 * i);                     //Deberia crear los aliens separados por 18 pixeles en horizontal y las filas separadas por otros 18 pixeles
+                this.aliens.add(alien);                                     //Seria mas sensato utilizar la variable en commons que dice el tamaño del alien y sumarle una separacion
             }
         }
 
@@ -286,7 +286,7 @@ public class Board extends JPanel {
 
             if (x <= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
 
-                direction = 0;
+                direction = 0;  //Deberia ser 1!!!!!
 
                 Iterator<Alien> i1 = this.aliens.iterator();
 
@@ -297,9 +297,9 @@ public class Board extends JPanel {
                 }
             }
 
-            if (x <= Commons.BORDER_LEFT && direction != 1) {
+            if (x <= Commons.BORDER_LEFT && direction != 1) {   //Falta el border rigth, en el border ya esta contado el ancho de la nave
 
-                direction = 1;
+                direction = 1;  //Deberia ser -1!!
 
                 Iterator<Alien> i2 = this.aliens.iterator();
 

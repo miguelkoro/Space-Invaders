@@ -35,7 +35,7 @@ public class Alien extends Sprite {
             this.y = Commons.BOARD_HEIGHT;
         } if (y<0){
             this.y=0;
-        }
+        }       //Este else aqui es raro, si se cumple la condición de que y<0, entonces no se asignan a la clase el x,y introducidos como parametros
         else
         {
             this.x = x;
@@ -55,8 +55,8 @@ public class Alien extends Sprite {
      * @param direction posición hacia la izquierda o derecha hacia la que se mueve el alien
      * */
     public void act(int direction) {
-
-        this.x = direction+Commons.ALIEN_WIDTH;
+        //¿Como se mueve el alien?, solo -1 o +1? o la anchura de la nave hacia un lado u otro
+        this.x = direction+Commons.ALIEN_WIDTH; //deberia ser direccion + la posicion x actual
     }
 
     /**
@@ -95,8 +95,8 @@ public class Alien extends Sprite {
             setDestroyed(true);
 
             //
-            if (x<= Commons.BOARD_WIDTH && y<= Commons.BOARD_HEIGHT) {
-                this.x += x;
+            if (x<= Commons.BOARD_WIDTH && y<= Commons.BOARD_HEIGHT) {  //Deberia ser un || ?
+                this.x += x;        //Lo de sumarle el x e y no tiene sentido
                 this.y += y;
             } else
             {
