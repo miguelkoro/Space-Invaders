@@ -29,15 +29,18 @@ public class Alien extends Sprite {
 
         if (x> Commons.BOARD_WIDTH){
             this.x = Commons.BOARD_WIDTH;
-        } if (x<0){
+        } 
+        if (x<0){
             this.x = 0;
-        } if (y> Commons.BOARD_HEIGHT){
+        } 
+        if (y> Commons.BOARD_HEIGHT){
             this.y = Commons.BOARD_HEIGHT;
-        } if (y<0){
+        } 
+        if (y<0){
             this.y=0;
-        }       //Este else aqui es raro, si se cumple la condición de que y<0, entonces no se asignan a la clase el x,y introducidos como parametros
-        else
-        {
+        } else {  //Este else aqui es raro, si se cumple la condición de que y<0, entonces no se asignan a la clase el x,y introducidos como parametros
+            // el else sería en vdd     if(x > 0 && x < Commons.BOARD_WIDTH) { this.x = x; }
+            //                          if(y > 0 && y < Commons.BOARD_HEIGHT) { this.y = y; }
             this.x = x;
             this.y = y;
         }
