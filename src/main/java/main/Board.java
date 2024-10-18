@@ -294,6 +294,7 @@ public class Board extends JPanel {
 
                     Alien a2 = i1.next();
                     a2.setY(a2.getY() + Commons.GO_DOWN);
+                    // ¿Esto va aquí? Baja antes de llegar al borde establecido
                 }
             }
 
@@ -307,6 +308,7 @@ public class Board extends JPanel {
 
                     Alien a = i2.next();
                     a.setX(a.getY() + Commons.GO_DOWN);
+                    // ¿Esto va aquí? Baja antes de llegar al borde establecido
                 }
             }
         }
