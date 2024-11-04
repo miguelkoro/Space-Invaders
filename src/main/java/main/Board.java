@@ -343,14 +343,15 @@ public class Board extends JPanel {
     private void update_bomb(){
         var generator = new Random();
 
-        for (Alien alien : this.aliens) {
+        for (Alien alien : this.aliens) {   //Por cada alien
 
-            int shot = generator.nextInt(15);
+            int shot = generator.nextInt(15);   //Generamos un numero aleatorio
             Alien.Bomb bomb = alien.getBomb();
 
-            if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
+            if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {    //Si el numero generado coincide con el de commons, el alien sigue vivo
+                                                            //Y la bomba anterior esta destruida
 
-                bomb.setDestroyed(false);
+                bomb.setDestroyed(false);       //Creamos una nueva bomba (Modificamos su isDestroyed a false) y la colocamos en la coordenadas del alien
                 bomb.setX(alien.getX());
                 bomb.setY(alien.getY());
             }
@@ -360,11 +361,11 @@ public class Board extends JPanel {
             int playerX = this.player.getX();
             int playerY = this.player.getY();
 
-            if (this.player.isVisible() && !bomb.isDestroyed()) {
+            if (this.player.isVisible() && !bomb.isDestroyed()) {   //Si el jugador esta vivo y la bomba aun no ha sido destruida
 
-                if (bombX >= (playerX)
-                        && bombX <= (playerX + Commons.PLAYER_WIDTH)
-                        && bombY >= (playerY)
+                if (bombX >= (playerX)  //Si la posX de la bomba >= posX del jugador && si la posX de la bomba <= posX del jugador mas su ancho
+                        && bombX <= (playerX + Commons.PLAYER_WIDTH)    // && posY de la bomba >= posY del jugador && posY de la bomba <= posY del jugador mas su alto
+                        && bombY >= (playerY)           //Entonces podemos asumir que la bomba ha impactado en el jugador, matamos al jugador y ponemos la bomba como destruida
                         && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
 
                     var ii = new ImageIcon(explImg);
@@ -374,11 +375,11 @@ public class Board extends JPanel {
                 }
             }
 
-            if (!bomb.isDestroyed()) {
+            if (!bomb.isDestroyed()) {  //Si la bomba esta aun activa, le sumamos 1 a su posY
 
                 bomb.setY(bomb.getY() + 1);
 
-                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
+                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {  //Si
 
                     bomb.setDestroyed(false);
                 }
