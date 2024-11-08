@@ -1,22 +1,21 @@
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Alien;
+import space_invaders.sprites.Player;
+import space_invaders.sprites.Shot;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ShotTest {
 
-   /* @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "0,0,0,0",
-            "0,-1,0,0",
-            "358,351,358,350",
-            "-1,0,0,0",
-            "359,350,358,350"})
-    void testsInitAlien1(int x, int y, int expectedX, int expectedY){
-        Alien alien = new Alien(x,y);
-        assertEquals(expectedX, alien.getX());
-        assertEquals(expectedY, alien.getY());
-
-    }*/
+            "100,100,106,99",
+            "100,100,100,99",
+            "100,100,106,100"})
+    void testsShot(int x, int y, int expectedX, int expectedY){
+        Shot shot = new Shot(x, y);
+        assertEquals(expectedX, shot.getX());
+        assertEquals(expectedY, shot.getY());
+    }
 
 }

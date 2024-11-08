@@ -29,18 +29,15 @@ public class Alien extends Sprite {
 
         if (x> Commons.BOARD_WIDTH){
             this.x = Commons.BOARD_WIDTH;
-        } 
-        if (x<0){
+        } if (x<0){
             this.x = 0;
-        } 
-        if (y> Commons.BOARD_HEIGHT){
+        } if (y> Commons.BOARD_HEIGHT){
             this.y = Commons.BOARD_HEIGHT;
-        } 
-        if (y<0){
+        } if (y<0){
             this.y=0;
-        } else {  //Este else aqui es raro, si se cumple la condición de que y<0, entonces no se asignan a la clase el x,y introducidos como parametros
-            // el else sería en vdd     if(x > 0 && x < Commons.BOARD_WIDTH) { this.x = x; }
-            //                          if(y > 0 && y < Commons.BOARD_HEIGHT) { this.y = y; }
+        }
+        else
+        {
             this.x = x;
             this.y = y;
         }
@@ -54,12 +51,12 @@ public class Alien extends Sprite {
     }
 
     /**
-     * Mueve horizontalmente el alien en la dirección indicada
+     * Mueve horizontalmente el alien en la dirección indicada.
      * @param direction posición hacia la izquierda o derecha hacia la que se mueve el alien
      * */
     public void act(int direction) {
-        //¿Como se mueve el alien?, solo -1 o +1? o la anchura de la nave hacia un lado u otro
-        this.x = direction+Commons.ALIEN_WIDTH; //deberia ser direccion + la posicion x actual
+
+        this.x = direction+Commons.ALIEN_WIDTH;
     }
 
     /**
@@ -90,16 +87,15 @@ public class Alien extends Sprite {
          * Inicializa el nuevo objeto bomba y le asigna las coordenadas indicadas y la imagen correspondiente en la interfaz
          * @param x coordenada X de la posición de la nueva bomba
          * @param y coordenada Y de la posición de la nueva bomba
-         * Si el valor X o Y indiados superan el margen de la pantalla, se les asignará el valor máximo permitido.
+         * Si el valor X o Y indicados superan el margen de la pantalla, se les asignará el valor máximo permitido.
          * Si se introduce algún valor negativo, será reemplazado por 0.
          * */
         private void initBomb(int x, int y) {
 
             setDestroyed(true);
 
-            //
-            if (x<= Commons.BOARD_WIDTH && y<= Commons.BOARD_HEIGHT) {  //Deberia ser un || ?
-                this.x += x;        //Lo de sumarle el x e y no tiene sentido
+            if (x<= Commons.BOARD_WIDTH && y<= Commons.BOARD_HEIGHT) {
+                this.x += x;
                 this.y += y;
             } else
             {

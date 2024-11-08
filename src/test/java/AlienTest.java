@@ -49,6 +49,7 @@ public class AlienTest {
     Bomb bomb = alien.new Bomb(x,y);
     assertEquals(expectedX, bomb.getX());
     assertEquals(expectedY, bomb.getY());
+    assertFalse(bomb.isDestroyed());
 
   }
 
