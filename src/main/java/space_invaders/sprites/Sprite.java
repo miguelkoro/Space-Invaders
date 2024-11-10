@@ -108,4 +108,22 @@ public class Sprite {
 
         return this.dying;
     }
+
+    //CLASES AÑADIDAS
+
+    /**
+     * Devuelve el valor de la velocidad en el eje x
+     * @return valor de dx
+     */
+    public int getDx(){
+        return this.dx;
+    }
+
+    /**
+     * Asigna el valor de la velocidad en el eje x
+     * @param dx Nuevo valor de dx
+     */
+    public void setDx(int dx){
+        this.dx=dx;
+    }
 }
