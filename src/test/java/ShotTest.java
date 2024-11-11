@@ -9,13 +9,17 @@ public class ShotTest {
 
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "100,100,106,99",
-            "100,100,100,99",
-            "100,100,106,100"})
-    void testsShot(int x, int y, int expectedX, int expectedY){
+            "100,100,106,99,false",
+            "100,100,100,99,false",
+            "100,100,106,100,false",
+            "100,100,106,99,true"})
+    void testsShot(int x, int y, int expectedX, int expectedY, boolean isVisible){
         Shot shot = new Shot(x, y);
         assertEquals(expectedX, shot.getX());
         assertEquals(expectedY, shot.getY());
+        assertFalse(shot.isVisible());  //Si es falso nos da como correcta
+
+
     }
 
 }
