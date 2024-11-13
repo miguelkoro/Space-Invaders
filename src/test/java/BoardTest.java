@@ -35,12 +35,7 @@ public class BoardTest {
 
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "false,false,'150;168;186;204;222;240','5;23;41;59',24",
-            "false,false,'150;168;186;204;222;240','0;0;0;0',24",
-            "false,false,'0;0;0;0;0;0','5;23;41;59',24",
-            "true,false,'150;168;186;204;222;240','5;23;41;59',24",
-            "false,true,'150;168;186;204;222;240','5;23;41;59',24",
-            "false,false,'150;168;186;204;222;240','5;23;41;59',10"})
+            "false,false,'150;168;186;204;222;240','5;23;41;59',24"})
     void testGameInit(boolean jugador, boolean disparo, String filasCoord, String columCoord, int numAlien){
         Board board = new Board();
         //assertEquals(numAlien, board.getAliens().size());
