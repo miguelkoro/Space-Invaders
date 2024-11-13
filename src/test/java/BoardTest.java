@@ -72,4 +72,13 @@ public class BoardTest {
 
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "24,Game Won!,false" //NumMuertos, mensaje, timer.isRunning
+            })
+    void testsUpdate(int x, int y, int expectedX, int expectedY){
+        //assertEquals(jugador, board.getPlayer() == null);
+
+    }
+
 }
