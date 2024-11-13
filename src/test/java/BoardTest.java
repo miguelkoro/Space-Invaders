@@ -74,11 +74,21 @@ public class BoardTest {
 
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "24,Game Won!,false" //NumMuertos, mensaje, timer.isRunning
+            "24,Game Won!,false", //NumMuertos, mensaje, timer.isRunning
+            "0,'',true"
             })
-    void testsUpdate(int x, int y, int expectedX, int expectedY){
-        //assertEquals(jugador, board.getPlayer() == null);
-
+    void testsUpdate(int alienMuertos, String msg, boolean timer){
+        Board board = new Board();
+        board.setDeaths(alienMuertos);
+        board.update();
+        if(alienMuertos==24) {//Comprobaremos en caso de que hayan muerto los 24 alien
+            assertEquals(alienMuertos, board.getDeaths());
+            assertEquals(board.getMessage(), "Game Won!");
+            assertEquals(board.getTimer().isRunning(), timer);
+        }else{
+            assertEquals(board.getTimer().isRunning(), timer);
+            assertEquals(board.getMessage(), msg);
+        }
     }
 
 }

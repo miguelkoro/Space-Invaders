@@ -233,7 +233,7 @@ public class Board extends JPanel {
      * el juego finaliza la partida.
      * Si no se han destruido, actualiza el estado del juego.
      * */
-    private void update() {
+    public void update() {
 
         if (deaths == Commons.CHANCE) {
             inGame = false;
