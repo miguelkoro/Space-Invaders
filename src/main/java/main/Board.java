@@ -354,7 +354,7 @@ public class Board extends JPanel {
      * Si el jugador ha sido alcanzado por una bomba, el jugador cambiará su estado "setDying" a verdadero, y su imagen se cambiará por la animación de explosión
      * Si no sucede ninguna de las condiciones anteriores, la bomba bajará verticalmente una posición.
      * */
-    private void update_bomb(){
+    public void update_bomb(){
         var generator = new Random();
 
         for (Alien alien : this.aliens) {

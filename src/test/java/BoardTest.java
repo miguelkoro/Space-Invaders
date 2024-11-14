@@ -33,6 +33,9 @@ public class BoardTest {
         }
     }*/
 
+    /**
+     * Test de caja negra de gameInit
+     */
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
             "false,false,'150;168;186;204;222;240','5;23;41;59',24"})
@@ -67,6 +70,9 @@ public class BoardTest {
 
     }
 
+    /**
+     * Test de caja negra de update
+     */
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
             "24,Game Won!,false", //NumMuertos, mensaje, timer.isRunning
@@ -85,5 +91,91 @@ public class BoardTest {
             assertEquals(board.getMessage(), msg);
         }
     }
+
+    /**
+     * Tests de caja negra de update_Bombs
+     */
+    //Generacion de nueva bomba (Deberiamos poder modificar Chance, para poder asegurar que si o si va a sacar una bomba)
+    @Test
+    public void test_update_Bombs_nuevaBomba(){
+        Board board = new Board();
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(true); //Ponemos que el alien sea visible
+        alien.setDying(false);  //Y que no este destruido
+        Alien.Bomb bomb = alien.getBomb();
+        bomb.setDestroyed(true); //Ponemos que empiece como destruida
+        board.update_bomb();
+        assertEquals(bomb.isDestroyed(), false);
+        //assertEquals(board.getPlayer().isDying(), false);
+        assertEquals(bomb.getX(), alien.getX());
+        assertEquals(bomb.getY(), alien.getY()+1);
+    }
+
+    //La bomba llega al suelo
+    @Test
+    public void test_update_Bombs_bombaSuelo(){
+        Board board = new Board();
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(true); //Ponemos que el alien sea visible
+        alien.setDying(false);  //Y que no este destruido
+        Alien.Bomb bomb = alien.getBomb(); //Cogemos su bomba
+        bomb.setDestroyed(false); //Ponemos que empiece como no destruida
+        bomb.setX(0);
+        bomb.setY(290);
+        board.update_bomb();
+        assertEquals(bomb.isDestroyed(), true);
+        //assertEquals(board.getPlayer().isDying(), false);
+        assertEquals(bomb.getX(), 0);
+        assertEquals(bomb.getY(), 290);
+    }
+
+    //La bomba alcanza al jugador
+    @Test
+    public void test_update_Bombs_jugadorAlcanzado(){
+        Board board = new Board();
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(true); //Ponemos que el alien sea visible
+        alien.setDying(false);  //Y que no este destruido
+        Alien.Bomb bomb = alien.getBomb(); //Cogemos su bomba
+        bomb.setDestroyed(false); //Ponemos que empiece como no destruida
+        bomb.setX(169);
+        bomb.setY(274);
+        Player player = board.getPlayer();
+        player.setX(169);
+        player.setY(280);
+        board.update_bomb();
+        assertEquals(bomb.isDestroyed(), true);
+        assertEquals(board.getPlayer().isDying(), true);
+        assertEquals(bomb.getX(), 169);
+        assertEquals(bomb.getY(), 274);
+    }
+
+    //La bomba baja un pixel
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "10,279,169,280,10,280",
+            "180,282,169,280,180,283",
+            "169,10,169,280,169,11"
+    })
+    void tests_update_Bombs_BombaDesciende(int bombX, int bombY, int playerX, int playerY, int bombNewX, int bombNewY){
+        Board board = new Board();
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(true); //Ponemos que el alien sea visible
+        alien.setDying(false);  //Y que no este destruido
+        Alien.Bomb bomb = alien.getBomb(); //Cogemos su bomba
+        bomb.setDestroyed(false); //Ponemos que empiece como no destruida
+
+        bomb.setX(bombX);
+        bomb.setY(bombY);
+        Player player = board.getPlayer();
+        player.setX(playerX);
+        player.setY(playerY);
+        board.update_bomb();
+        assertEquals(bomb.isDestroyed(), false);
+        assertEquals(board.getPlayer().isDying(), false);
+        assertEquals(bomb.getX(), bombNewX);
+        assertEquals(bomb.getY(), bombNewY);
+    }
+
 
 }
