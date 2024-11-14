@@ -15,24 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 //import org.junit.jupiter.api.BeforeEach;
 public class BoardTest {
     private Board board;
-
-   /* @BeforeEach
-    public void setUp(){
-        board= new Board();
-    }
-
-    @Test
-    public void UpdateInit(){
-        //assertEquals(board.deaths,0); //No es publica la variable
-        Class c = board.getClass();
-        Field fields[] = c.getDeclaredFields();
-        for(Field f: fields){
-            System.out.println("Nombre " + f.getName());
-            System.out.println("Tipo dato " + f.getType());
-            System.out.println("Tipo modificador " + Modifier.toString(f.getModifiers()));
-        }
-    }*/
-
     /**
      * Test de caja negra de gameInit
      */
@@ -41,8 +23,6 @@ public class BoardTest {
             "false,false,'150;168;186;204;222;240','5;23;41;59',24"})
     void testGameInit(boolean jugador, boolean disparo, String filasCoord, String columCoord, int numAlien){
         Board board = new Board();
-        //assertEquals(numAlien, board.getAliens().size());
-
 
         // Verifica si el jugador y disparo están inicializados
         assertEquals(jugador, board.getPlayer() == null);
