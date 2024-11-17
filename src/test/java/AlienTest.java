@@ -52,7 +52,33 @@ public class AlienTest {
     assertEquals(expectedX, bomb.getX());
     assertEquals(expectedY, bomb.getY());
     assertTrue(bomb.isDestroyed());
+  }
 
+  /**
+   * PRUEBAS CAJA BLANCA
+   */
+  @org.junit.jupiter.params.ParameterizedTest
+  @org.junit.jupiter.params.provider.CsvSource(value={
+          "100,100,100,100",
+          "360,100,358,100",
+          "360,355,358,350",
+          "-1,100,0,100",
+          "-1,-1,0,0"})
+  void test_CajaBlanca_AlienInit(int x, int y, int newX, int newY){
+    Alien alien = new Alien(x,y);
+    assertEquals(newX, alien.getX());
+    assertEquals(newY, alien.getY());
+  }
+
+  @org.junit.jupiter.params.ParameterizedTest
+  @org.junit.jupiter.params.provider.CsvSource(value={
+          "400,400,358,350",
+          "100,100,100,100"})
+  void test_CajaBlanca_InitBomb(int x, int y, int expectedX, int expectedY){
+    Alien alien = new Alien(x,y);
+    Bomb bomb = alien.new Bomb(x,y);
+    assertEquals(expectedX, bomb.getX());
+    assertEquals(expectedY, bomb.getY());
   }
 
 }
