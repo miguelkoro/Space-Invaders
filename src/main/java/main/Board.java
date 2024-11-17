@@ -251,7 +251,7 @@ public class Board extends JPanel {
      * Comprueba la posición del alien y del disparo realizado y, si el disparo acierta al alien (es decir, las coordenadas X e Y del disparo están entre las coordenadas x+ancho del alienígena, e y+alto del alienígena),
      * activa la animación de explosión del alienígena, lo elimina del tablero y aumenta en uno el contador de alienígenas derribados (deaths) en uno.
      * */
-    private void update_shots() {
+    public void update_shots() {
         if (this.shot.isVisible()) {
 
             int shotX = this.shot.getX();
@@ -293,7 +293,7 @@ public class Board extends JPanel {
      * Si se ha alcanzado el borde del tablero y no se puede mover el alienígena en la dirección indicada, se cambia de dirección y se mueven todos los alienígenas una posición hacia abajo (Commons.GO_DOWN).
      * Si los alienígenas alcanzan el borde inferior del tablero, el juego termina y se nos muestra por pantalla el mensaje "Invasion!"
      * */
-    private void update_aliens(){
+    public void update_aliens(){
         for (Alien alien : this.aliens) {
 
             int x = alien.getX();

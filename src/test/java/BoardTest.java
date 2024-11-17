@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Player;
+import space_invaders.sprites.Shot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -155,6 +156,69 @@ public class BoardTest {
         assertEquals(board.getPlayer().isDying(), false);
         assertEquals(bomb.getX(), bombNewX);
         assertEquals(bomb.getY(), bombNewY);
+    }
+
+    /**
+     *  Caja negra Update Shots
+     */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "150,150,150,150,150,150,1,false,false",
+            "150,150,20,1,20,0,0,false,true",
+            "150,150,170,150,170,149,0,true,true",
+            "150,150,150,170,150,169,0,true,true",
+            "150,150,150,130,150,129,0,true,true"
+    })
+    void tests_update_Shots(int alienX, int alienY, int shotX, int shotY, int shotNewX, int shotNewY, int newDeaths, boolean newVisibleShot, boolean newVisibleAlien){
+        Board board = new Board();
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(true); //Ponemos que el alien sea visible
+        alien.setDying(false);  //Y que no este destruido
+        Shot shot = new Shot(shotX, shotY);
+        alien.setX(alienX);
+        alien.setY(alienY);
+        shot.setVisible(true);
+
+        board.update_shots();
+        assertEquals(shotNewX, shot.getX());
+        assertEquals(shotNewY, shot.getY());
+        assertEquals(newDeaths, board.getDeaths());
+        assertEquals(newVisibleShot, shot.isVisible() );
+        assertEquals(newVisibleAlien, alien.isVisible());
+
+    }
+
+    /**
+     *  Caja negra Update aliens
+     */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "0,100,true,-1,0,115,1,true,''",
+            "358,100,true,1,358,115,-1,true,''",
+            "0,335,true,-1,0,350,1,false,'Invasion!'",
+            "358,335,true,1,358,350,-1,false,'Invasion!'",
+            "358,335,true,1,358,350,-1,true,''"
+
+    })
+    void tests_update_aliens(int alienX, int alienY, boolean alienVisible, int direccion, int alienNewX, int alienNewY, int newDireccion, boolean newInGame, String msg){
+        Board board = new Board();
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(alienVisible);
+        alien.setDying(false);
+        board.setInGame(true);
+        alien.setX(alienX);
+        alien.setY(alienY);
+        alien.setDx(direccion);
+
+        board.update_aliens();
+
+        assertEquals(alienNewX, alien.getX());
+        assertEquals(alienNewY, alien.getY());
+        assertEquals(newDireccion, alien.getDx());
+
+        assertEquals(newInGame, board.isInGame());
+        assertEquals(msg, board.getMessage());
+
     }
 
 
