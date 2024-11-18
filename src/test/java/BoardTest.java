@@ -131,7 +131,7 @@ public class BoardTest {
         assertEquals(bomb.getY(), 274);
     }
 
-    //La bomba baja un pixel
+    //Test caja negra UpdateBombs
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
             "10,279,169,280,10,280",
@@ -220,6 +220,56 @@ public class BoardTest {
         assertEquals(msg, board.getMessage());
 
     }
+
+    /**
+     * PRUEBAS CAJA BLANCA
+     */
+
+    /**
+     * Test de caja Blanca de update
+     */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "1, '', true, true",
+            "5, 'Game Won!',false, false"}) //NumMuertos, mensaje, timer.isRunning
+    void tests_CajaBlanca_Update(int alienMuertos, String msg, boolean timer, boolean NewInGame){
+        Board board = new Board();
+        board.setInGame(true);
+        board.setMessage("");
+        board.getTimer().start();
+        board.setDeaths(alienMuertos);
+        board.update();
+        assertEquals(NewInGame, board.isInGame());
+        assertEquals(board.getTimer().isRunning(), timer);
+        assertEquals(board.getMessage(), msg);
+    }
+
+    /*@org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "10,279,169,280,10,280",
+            "180,282,169,280,180,283",
+            "169,10,169,280,169,11"
+    })
+    void tests_CajaBlanca_update_Bombs_BombaDesciende(int bombX, int bombY, int playerX, int playerY, int bombNewX, int bombNewY){
+        Board board = new Board();
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(true); //Ponemos que el alien sea visible
+        alien.setDying(false);  //Y que no este destruido
+        Alien.Bomb bomb = alien.getBomb(); //Cogemos su bomba
+        bomb.setDestroyed(false); //Ponemos que empiece como no destruida
+
+        bomb.setX(bombX);
+        bomb.setY(bombY);
+        Player player = board.getPlayer();
+        player.setX(playerX);
+        player.setY(playerY);
+        board.update_bomb();
+        assertEquals(bomb.isDestroyed(), false);
+        assertEquals(board.getPlayer().isDying(), false);
+        assertEquals(bomb.getX(), bombNewX);
+        assertEquals(bomb.getY(), bombNewY);
+    }*/
+
 
 
 }
