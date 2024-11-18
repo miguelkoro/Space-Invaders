@@ -65,11 +65,11 @@ public class BoardTest {
         board.update();
         if(alienMuertos==24) {//Comprobaremos en caso de que hayan muerto los 24 alien
             assertEquals(alienMuertos, board.getDeaths());
-            assertEquals(board.getMessage(), "Game Won!");
-            assertEquals(board.getTimer().isRunning(), timer);
+            assertEquals("Game Won!",board.getMessage());
+            assertEquals(timer, board.getTimer().isRunning());
         }else{
-            assertEquals(board.getTimer().isRunning(), timer);
-            assertEquals(board.getMessage(), msg);
+            assertEquals( timer, board.getTimer().isRunning());
+            assertEquals(msg, board.getMessage());
         }
     }
 
@@ -244,31 +244,121 @@ public class BoardTest {
         assertEquals(board.getMessage(), msg);
     }
 
-    /*@org.junit.jupiter.params.ParameterizedTest
+    /**
+     *  Prueba con mas de un alien
+     */
+    @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "10,279,169,280,10,280",
-            "180,282,169,280,180,283",
-            "169,10,169,280,169,11"
+            "false, true, false, 10 ,10 ,10 ,10 ,10 ,10, 10, 10, true, false",
+            "false, false, true, 10, 10,5,15,10,10,10,10, true, false",
+            "false, false, true, 50,50,55,55,10,10,50,50, true, false",
+            "false, true, false, 10,10,10,10,10,10,10,11, false, false",
+            "false, true, false, 10,285,10,10,10,10,10,286,false, false"
+
     })
-    void tests_CajaBlanca_update_Bombs_BombaDesciende(int bombX, int bombY, int playerX, int playerY, int bombNewX, int bombNewY){
+    void tests_CajaBlanca_update_Bombs(boolean alienVisible, boolean bombDestroyed, boolean playerVisible, int bombX, int bombY, int playerX, int playerY, int alienX, int alienY,
+                                                      int bombNewX, int bombNewY, boolean newBombDestroyed, boolean newPlayerDying){
         Board board = new Board();
         Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
-        alien.setVisible(true); //Ponemos que el alien sea visible
+        alien.setVisible(alienVisible);
         alien.setDying(false);  //Y que no este destruido
-        Alien.Bomb bomb = alien.getBomb(); //Cogemos su bomba
-        bomb.setDestroyed(false); //Ponemos que empiece como no destruida
+        alien.setX(alienX);
+        alien.setY(alienY);
 
+        Alien.Bomb bomb = alien.getBomb(); //Cogemos su bomba
+        bomb.setDestroyed(bombDestroyed);
         bomb.setX(bombX);
         bomb.setY(bombY);
+
         Player player = board.getPlayer();
+        player.setVisible(playerVisible);
         player.setX(playerX);
         player.setY(playerY);
+
         board.update_bomb();
-        assertEquals(bomb.isDestroyed(), false);
-        assertEquals(board.getPlayer().isDying(), false);
-        assertEquals(bomb.getX(), bombNewX);
-        assertEquals(bomb.getY(), bombNewY);
-    }*/
+        assertEquals(newBombDestroyed,bomb.isDestroyed());
+        assertEquals(newPlayerDying, player.isDying());
+        assertEquals(bombNewX, bomb.getX());
+        assertEquals(bombNewY, bomb.getY());
+    }
+
+    /**
+     * Test Caja Blanca Update_shots
+     */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "false, false, 10, 10,10,10,false,0,10,false",
+            "true, false, 10,10,10,10, false, 0,6, false",
+            "true, true,50,50,55,55, false,0,46,false",
+            "true, true, 55,55,50,50,true,-1,51,true",
+            "true, false,10,-10,55,55,false,0,-10, true",
+            "true, true,-50,-50,-55,-55,true,-1,-50, true"
+    })
+    void tests_CajaBlanca_update_Shots(boolean shotIsVisible, boolean alienIsVisible, int shotX, int shotY, int alienX, int alienY,
+                                       boolean newAlienIsDying, int newDeaths, int newShotY, boolean newShotIsDying){
+        Board board = new Board();
+        board.setDeaths(0);
+
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(alienIsVisible); //Ponemos que el alien sea visible
+        alien.setDying(false);  //Y que no este destruido
+        alien.setX(alienX);
+        alien.setY(alienY);
+
+        Shot shot = new Shot(shotX, shotY);
+        shot.setVisible(shotIsVisible);
+        shot.setDying(false);
+
+        board.update_shots();
+
+        assertEquals(newShotY, shot.getY());
+        assertEquals(newDeaths, board.getDeaths());
+        assertEquals(newAlienIsDying, alien.isDying());
+        assertEquals(newShotIsDying, shot.isDying());
+
+    }
+
+    /**
+     * Test Caja Blanca GameInit
+     */
+    @Test
+    void test_CajaBlanca_GameInit(){
+        Board board = new Board();
+        // Verifica si el jugador y disparo están inicializados
+        assertEquals(false, board.getPlayer() == null);
+        assertEquals(false, board.getShot() == null);
+        // Verifica la cantidad de alienígenas
+        assertEquals(24, board.getAliens().size());
+    }
+
+    /**
+     * Test Caja Blanca Update_aliens
+     */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value={
+            "10,300,1,10,300,0",
+            "10,300,1,10,315,0",
+            "330,300,1,330,300,1",
+            "330,300,1,330,300,1"
+
+    })
+    void tests_CajaBlanca_update_aliens(int alienX, int alienY, int direccion, int alienNewX, int alienNewY, int newDireccion){
+        Board board = new Board();
+        board.setInGame(true);
+
+        Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
+        alien.setVisible(true);
+        alien.setDying(false);
+        alien.setX(alienX);
+        alien.setY(alienY);
+        alien.setDx(direccion);
+
+        board.update_aliens();
+
+        assertEquals(alienNewX, alien.getX());
+        assertEquals(alienNewY, alien.getY());
+        assertEquals(newDireccion, alien.getDx());
+    }
 
 
 
