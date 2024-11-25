@@ -34,7 +34,7 @@ public class Shot extends Sprite {
         int V_SPACE = 1;
         setY(y - V_SPACE);
 
-        setVisible(false); //Hacemos que no sea visible, ya que aun no se ha disparado
+
     }
 }
 

@@ -252,7 +252,7 @@ public class Board extends JPanel {
      * activa la animación de explosión del alienígena, lo elimina del tablero y aumenta en uno el contador de alienígenas derribados (deaths) en uno.
      * */
     public void update_shots() {
-        if (this.shot.isVisible()) {
+        /*if (this.shot.isVisible()) {
 
             int shotX = this.shot.getX();
             int shotY = this.shot.getY();
@@ -285,7 +285,38 @@ public class Board extends JPanel {
             } else {
                 this.shot.setY(y);
             }
+
+        }*/
+        int shotX = this.shot.getX();
+        int shotY = this.shot.getY();
+
+        for (Alien alien : this.aliens) {
+            int alienX = alien.getX();
+            int alienY = alien.getY();
+
+            if (alien.isVisible() && this.shot.isVisible()) { //Si el alien esta vivo y el disparo ha salido
+                if(shotY-1==0){ //Vemos si el disparo ha llegado al final del tablero y lo destruimos
+                    shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
+                    shot.setVisible(false);
+                }else if(shotY-1>alienY+Commons.ALIEN_HEIGHT || shotY-1<alienY){ //El disparo aun esta antes del alien o ya lo ha sobrepasado, hacemos que avance uno
+                    shot.setY(shotY-1);
+                }else{ //El disparo esta dentro de las coord Y del alien, ahora vemos las X
+                    if(shotX < alienX || shotX > alienX + Commons.ALIEN_WIDTH) { //El disparo esta a la derecha o izquierda del alien
+                        shot.setY(shotY-1);
+                    }else{ //Impacto
+                        shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
+                        var ii = new ImageIcon(explImg);
+                        alien.setImage(ii.getImage());
+                        //alien.setDying(true);
+                        alien.setVisible(false); //Ponemos el alien como no visible
+                        deaths++; //Modificado a sumarle una muerte
+                        //this.shot.die();
+                        shot.setVisible(false); //Hacemos que el disparo sea no visible
+                    }
+                }
+            }
         }
+
     }
     /**
      * Actualiza los el estado de los aliens,
@@ -383,7 +414,7 @@ public class Board extends JPanel {
 
         for (Alien alien : this.aliens) {
 
-            int shot = generator.nextInt(15);
+           /* int shot = generator.nextInt(15);
             Alien.Bomb bomb = alien.getBomb();
 
             if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
@@ -420,6 +451,36 @@ public class Board extends JPanel {
 
                     bomb.setDestroyed(false);
                 }
+            }*/
+            Alien.Bomb bomb = alien.getBomb();
+            //Si el alien es visible y su bomba esta destruida, y el numero random es acertado, crea una bomba para ese alien
+            if(alien.isVisible() && bomb.isDestroyed() && RandomChance(generator)){
+                bomb.setDestroyed(false);
+                bomb.setX(alien.getX());
+                bomb.setY(alien.getY());
+            }
+            if(bomb.isVisible()) { //Si la bomba es visible (No ha sido destruida)
+                //Guardamos las variables por comodidad
+                int bombX = bomb.getX();
+                int bombY = bomb.getY();
+                int playerX = this.player.getX();
+                int playerY = this.player.getY();
+
+                if (bombY + 1 >= Commons.GROUND) { //Si la bomba ha llegado al suelo se destruye
+                    bomb.setDestroyed(true);
+                } else if (bombY + 1 <= playerY) { //Si la bomba aun no ha llegado al jugador, sigue avanzando
+                    bomb.setY(bombY+1);
+                } else { //La bomba ha llegado a la altura del jugador, habra que ver las coords X para saber si puede impactar en el o no
+                    if(bombX>playerX + Commons.PLAYER_WIDTH || bombX<playerX){ //La bomba esta fuera del rango x del jugador
+                        bomb.setY(bombY+1);
+                    }else{
+                        var ii = new ImageIcon(explImg);
+                        this.player.setImage(ii.getImage());
+                        this.player.setDying(true); //Puesto como true
+                        bomb.setDestroyed(true);
+                        message = "Game over!"; //Añadido mensaje de fin del juego
+                    }
+                }
             }
         }
 
@@ -428,8 +489,8 @@ public class Board extends JPanel {
     /**
      * METODO PARA SACAR UN NUMERO ALEATORIO Y SI ES IGUAL A CHANCE DEVOLVER TRUE
      */
-    public boolean RandomChance(){
-        var generator = new Random();
+    public boolean RandomChance(Random generator){
+        //var generator = new Random();
         int shot = generator.nextInt(15);
         return shot==Commons.CHANCE;
     }

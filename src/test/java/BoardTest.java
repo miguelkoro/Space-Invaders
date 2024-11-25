@@ -123,7 +123,7 @@ public class BoardTest {
         bomb.setY(274);
         Player player = board.getPlayer();
         player.setX(169);
-        player.setY(280);
+        player.setY(270);
         board.update_bomb();
         assertEquals(true, bomb.isDestroyed());
         assertEquals(true,board.getPlayer().isDying());
@@ -135,7 +135,7 @@ public class BoardTest {
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
             "10,279,169,280,10,280",
-            "180,282,169,280,180,283",
+            "180,282,159,280,180,283",
             "169,10,169,280,169,11"
     })
     void tests_update_Bombs_BombaDesciende(int bombX, int bombY, int playerX, int playerY, int bombNewX, int bombNewY){
@@ -163,7 +163,7 @@ public class BoardTest {
      */
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "150,150,150,150,150,150,1,false,false",
+            "150,150,150,151,150,150,1,false,false",
             "150,150,20,1,20,0,0,false,true",
             "150,150,170,150,170,149,0,true,true",
             "150,150,150,170,150,169,0,true,true",
@@ -174,7 +174,11 @@ public class BoardTest {
         Alien alien = board.getAliens().get(0); //Cogemos uno de los aliens
         alien.setVisible(true); //Ponemos que el alien sea visible
         alien.setDying(false);  //Y que no este destruido
-        Shot shot = new Shot(shotX, shotY);
+
+        Shot shot = board.getShot(); //Modificado 25/11
+        shot.setX(shotX);
+        shot.setY(shotY);
+
         alien.setX(alienX);
         alien.setY(alienY);
         shot.setVisible(true);
