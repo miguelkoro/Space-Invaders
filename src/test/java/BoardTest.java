@@ -85,7 +85,7 @@ public class BoardTest {
         alien.setDying(false);  //Y que no este destruido
         Alien.Bomb bomb = alien.getBomb();
         bomb.setDestroyed(true); //Ponemos que empiece como destruida
-        board.update_bomb();
+        board.update_bomb(true);
         assertEquals(false, bomb.isDestroyed());
         //assertEquals(board.getPlayer().isDying(), false);
         assertEquals(alien.getX(), bomb.getX());
@@ -103,7 +103,7 @@ public class BoardTest {
         bomb.setDestroyed(false); //Ponemos que empiece como no destruida
         bomb.setX(0);
         bomb.setY(290);
-        board.update_bomb();
+        board.update_bomb(true);
         assertEquals(true, bomb.isDestroyed());
         //assertEquals(board.getPlayer().isDying(), false);
         assertEquals(0,bomb.getX());
@@ -124,7 +124,7 @@ public class BoardTest {
         Player player = board.getPlayer();
         player.setX(169);
         player.setY(280);
-        board.update_bomb();
+        board.update_bomb(true);
         assertEquals(true, bomb.isDestroyed());
         assertEquals(true,board.getPlayer().isDying());
         assertEquals(169, bomb.getX());
@@ -151,7 +151,7 @@ public class BoardTest {
         Player player = board.getPlayer();
         player.setX(playerX);
         player.setY(playerY);
-        board.update_bomb();
+        board.update_bomb(true);
         assertEquals(false,bomb.isDestroyed());
         assertEquals(false, board.getPlayer().isDying());
         assertEquals(bombNewX,bomb.getX());
@@ -195,9 +195,9 @@ public class BoardTest {
     @org.junit.jupiter.params.provider.CsvSource(value={
             "0,100,true,-1,0,115,1,true,''",
             "358,100,true,1,358,115,-1,true,''",
-            "0,335,true,-1,0,350,1,false,'Invasion!'",
-            "358,335,true,1,358,350,-1,false,'Invasion!'",
-            "358,335,true,1,358,350,-1,true,''"
+            "0,275,true,-1,0,290,1,false,'Invasion!'",
+            "358,275,true,1,358,290,-1,false,'Invasion!'",
+            
 
     })
     void tests_update_aliens(int alienX, int alienY, boolean alienVisible, int direccion, int alienNewX, int alienNewY, int newDireccion, boolean newInGame, String msg){
@@ -208,13 +208,13 @@ public class BoardTest {
         board.setInGame(true);
         alien.setX(alienX);
         alien.setY(alienY);
-        alien.setDx(direccion);
+        board.setDirection(direccion);
 
         board.update_aliens();
 
         assertEquals(alienNewX, alien.getX());
         assertEquals(alienNewY, alien.getY());
-        assertEquals(newDireccion, alien.getDx());
+        assertEquals(newDireccion, board.getDirection());
 
         assertEquals(newInGame, board.isInGame());
         assertEquals(msg, board.getMessage());
@@ -275,7 +275,7 @@ public class BoardTest {
         player.setX(playerX);
         player.setY(playerY);
 
-        board.update_bomb();
+        board.update_bomb(true);
         assertEquals(newBombDestroyed,bomb.isDestroyed());
         assertEquals(newPlayerDying, player.isDying());
         assertEquals(bombNewX, bomb.getX());

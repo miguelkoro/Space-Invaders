@@ -33,7 +33,7 @@ public class Board extends JPanel {
 
     private boolean inGame = true;
     private String explImg = "src/main/resources/images/explosion.png";
-    private String message = "Game Over";
+    private String message = "";
 
     private Timer timer;
 
@@ -244,7 +244,7 @@ public class Board extends JPanel {
         this.player.act();
         update_shots();
         update_aliens();
-        update_bomb();
+        update_bomb(RandomChance()); //Modificado para poder seleccionar si se crea bomba o no
     }
     /**
      * Actualiza el estado de los disparos a los alienígenas.
@@ -298,7 +298,7 @@ public class Board extends JPanel {
 
             int x = alien.getX();
 
-            if (x <= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
+            /*if (x <= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
 
                 direction = 0;
 
@@ -341,6 +341,30 @@ public class Board extends JPanel {
                 }
 
                 alien.act(direction);
+            }*/
+            //Miramos si el alien es visible y ha llegado al borde derecho
+            if(alien.isVisible() && x+direction>Commons.BOARD_WIDTH){
+                //Cambiamos la direccion de todos los aliens y los bajamos de nivel
+                Iterator<Alien> it = this.aliens.iterator();
+                direction=-1;
+                while (it.hasNext()) {
+                    Alien alieniT = it.next();
+                    alieniT.setY(alieniT.getY() + Commons.GO_DOWN); //Se baja al alien un nivel
+                }
+            }else if ( alien.isVisible() && x+direction<0){ //Miramos si ha llegado al borde izq
+                Iterator<Alien> it = this.aliens.iterator();
+                direction=1;
+                while (it.hasNext()) {
+                    Alien alieniT = it.next();
+                    alieniT.setY(alieniT.getY() + Commons.GO_DOWN);
+                }
+            }else{
+                alien.act(direction);
+            }
+            //Controlamos si un alien visible ha llegado al fin del juego
+            if(alien.isVisible() && alien.getY()>=Commons.GROUND){
+                inGame = false;
+                message = "Invasion!";  //FALTA AÑADIR UN FINAL DEL JUEGO, PARAR EL RELOJ Y TAL
             }
         }
 
@@ -354,7 +378,7 @@ public class Board extends JPanel {
      * Si el jugador ha sido alcanzado por una bomba, el jugador cambiará su estado "setDying" a verdadero, y su imagen se cambiará por la animación de explosión
      * Si no sucede ninguna de las condiciones anteriores, la bomba bajará verticalmente una posición.
      * */
-    public void update_bomb(){
+    public void update_bomb(boolean chance){
         var generator = new Random();
 
         for (Alien alien : this.aliens) {
@@ -400,6 +424,17 @@ public class Board extends JPanel {
         }
 
     }
+
+    /**
+     * METODO PARA SACAR UN NUMERO ALEATORIO Y SI ES IGUAL A CHANCE DEVOLVER TRUE
+     */
+    public boolean RandomChance(){
+        var generator = new Random();
+        int shot = generator.nextInt(15);
+        return shot==Commons.CHANCE;
+    }
+
+
     /**
      * FUNCIÓN RELACIONADA CON LA GESTIÓN DE INTERFAZ. NO ES NECESARIO PROBARLA.
      * */
