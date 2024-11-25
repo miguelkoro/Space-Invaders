@@ -466,9 +466,9 @@ public class Board extends JPanel {
                 int playerX = this.player.getX();
                 int playerY = this.player.getY();
 
-                if (bombY + 1 >= Commons.GROUND) { //Si la bomba ha llegado al suelo se destruye
+                if (bombY + 6 + 1 >= Commons.GROUND) { //Si la bomba ha llegado al suelo se destruye (Le sumamos 6 por el alto de la bomba)
                     bomb.setDestroyed(true);
-                } else if (bombY + 1 <= playerY) { //Si la bomba aun no ha llegado al jugador, sigue avanzando
+                } else if (bombY + 6 + 1 <= playerY) { //Si la bomba aun no ha llegado al jugador, sigue avanzando
                     bomb.setY(bombY+1);
                 } else { //La bomba ha llegado a la altura del jugador, habra que ver las coords X para saber si puede impactar en el o no
                     if(bombX>playerX + Commons.PLAYER_WIDTH || bombX<playerX){ //La bomba esta fuera del rango x del jugador
