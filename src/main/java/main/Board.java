@@ -244,7 +244,7 @@ public class Board extends JPanel {
         this.player.act();
         update_shots();
         update_aliens();
-        update_bomb(RandomChance()); //Modificado para poder seleccionar si se crea bomba o no
+        update_bomb();
     }
     /**
      * Actualiza el estado de los disparos a los alienígenas.
@@ -378,7 +378,7 @@ public class Board extends JPanel {
      * Si el jugador ha sido alcanzado por una bomba, el jugador cambiará su estado "setDying" a verdadero, y su imagen se cambiará por la animación de explosión
      * Si no sucede ninguna de las condiciones anteriores, la bomba bajará verticalmente una posición.
      * */
-    public void update_bomb(boolean chance){
+    public void update_bomb(){
         var generator = new Random();
 
         for (Alien alien : this.aliens) {
