@@ -65,11 +65,11 @@ public class BoardTest {
         board.update();
         if(alienMuertos==24) {//Comprobaremos en caso de que hayan muerto los 24 alien
             assertEquals(alienMuertos, board.getDeaths());
-            assertEquals("Game Won!",board.getMessage());
+            assertEquals("Game won!",board.getMessage());
             assertEquals(timer, board.getTimer().isRunning());
         }else{
             assertEquals( timer, board.getTimer().isRunning());
-            assertEquals(board.getMessage(), msg);
+            assertEquals(msg, board.getMessage());
         }
     }
 

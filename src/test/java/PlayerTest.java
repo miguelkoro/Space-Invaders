@@ -20,7 +20,7 @@ public class PlayerTest {
             "2,0,2",
             "-2,343,341",
             "-2,0,0",
-            "2,343,343",
+            "2,358,358",
             "0,0,0"})
     void testAct(int dx, int x, int nuevoX){
         Player player = new Player();

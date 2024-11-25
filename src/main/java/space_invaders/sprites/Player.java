@@ -24,7 +24,7 @@ public class Player extends Sprite {
         width = ii.getImage().getWidth(null);
         setImage(ii.getImage());
 
-        int START_X = 270;
+        int START_X = 169;
         setX(START_X);
 
         int START_Y = 280;
@@ -38,16 +38,8 @@ public class Player extends Sprite {
      * */
     public void act() {
 
-        x += dx;
-
-        if (x >= 2) {
-
-            x = 2;
-        }
-
-        if (x >= Commons.BOARD_WIDTH - 2 * width) {
-
-            x = Commons.BOARD_WIDTH - 2 * width;
+        if(x+dx<Commons.BOARD_WIDTH && x+dx>0){ //Si sumandole a la posicion el dx no se sale de los margenes, se le asigna
+            x+=dx;
         }
     }
     /**
@@ -63,7 +55,7 @@ public class Player extends Sprite {
 
         if (key == KeyEvent.VK_LEFT) {
 
-            dx = 2;
+            dx = -2;
         }
 
         if (key == KeyEvent.VK_RIGHT) {

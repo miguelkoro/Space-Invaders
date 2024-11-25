@@ -1,5 +1,7 @@
 package space_invaders.sprites;
 
+import main.Commons;
+
 import java.awt.Image;
 
 public class Sprite {
@@ -125,5 +127,30 @@ public class Sprite {
      */
     public void setDx(int dx){
         this.dx=dx;
+    }
+
+    /**
+     *
+     * METODOS NUEVOS PARA CONTROLAR QUE NO SE SALGAN LAS COORDENADAS DE LOS MARGENES
+     *
+     */
+
+    public int IniciarEnMargenX(int x){
+        if(x > Commons.BOARD_WIDTH){
+            return Commons.BOARD_WIDTH;
+        }else if(x < 0){
+            return 0;
+        }else{
+            return x;
+        }
+    }
+    public int IniciarEnMargenY(int y){
+        if(y > Commons.BOARD_HEIGHT){
+            return Commons.BOARD_HEIGHT;
+        }else if(y < 0){
+            return 0;
+        }else{
+            return y;
+        }
     }
 }

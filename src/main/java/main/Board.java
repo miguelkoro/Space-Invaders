@@ -72,7 +72,7 @@ public class Board extends JPanel {
         timer = new Timer(Commons.DELAY, new GameCycle());
         timer.start();
 
-        gameInit();
+        //gameInit(); Lo quitamos porque ya hacemos la llamada en el constructor
     }
 
     /**
@@ -90,7 +90,7 @@ public class Board extends JPanel {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
 
-                var alien = new Alien(Commons.ALIEN_INIT_Y + 18 * j,
+                var alien = new Alien(Commons.ALIEN_INIT_X + 18 * j,    //Cambiada la i por una j y el Alien_init_Y por Alien_Init_X
                         Commons.ALIEN_INIT_Y + 18 * i);
                 this.aliens.add(alien);
             }
@@ -235,7 +235,7 @@ public class Board extends JPanel {
      * */
     public void update() {
 
-        if (deaths == Commons.CHANCE) {
+        if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) { //Cambiado porque estaba en vez del numero de aliens, la constante CHOICE
             inGame = false;
             timer.stop();
             message = "Game won!";
