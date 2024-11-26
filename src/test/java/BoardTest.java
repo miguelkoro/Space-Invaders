@@ -163,8 +163,8 @@ public class BoardTest {
      */
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "150,150,150,151,150,150,1,false,false",
-            "150,150,20,1,20,0,0,false,true",
+            "150,150,150,151,150,151,1,false,false",
+            "150,150,20,1,20,1,0,false,true",
             "150,150,170,150,170,149,0,true,true",
             "150,150,150,170,150,169,0,true,true",
             "150,150,150,130,150,129,0,true,true"

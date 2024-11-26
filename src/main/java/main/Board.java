@@ -98,6 +98,7 @@ public class Board extends JPanel {
 
         this.player = new Player();
         this.shot = new Shot();
+        shot.setVisible(false);
     }
     /**
      * Genera gráficamente los aliens en la interfaz en las posiciones indicadas.
@@ -296,15 +297,16 @@ public class Board extends JPanel {
 
             if (alien.isVisible() && this.shot.isVisible()) { //Si el alien esta vivo y el disparo ha salido
                 if(shotY-1==0){ //Vemos si el disparo ha llegado al final del tablero y lo destruimos
-                    shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
+                    //shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
                     shot.setVisible(false);
+                    //shot.die();
                 }else if(shotY-1>alienY+Commons.ALIEN_HEIGHT || shotY-1<alienY){ //El disparo aun esta antes del alien o ya lo ha sobrepasado, hacemos que avance uno
-                    shot.setY(shotY-1);
+                    //shot.setY(shotY-1);
                 }else{ //El disparo esta dentro de las coord Y del alien, ahora vemos las X
                     if(shotX < alienX || shotX > alienX + Commons.ALIEN_WIDTH) { //El disparo esta a la derecha o izquierda del alien
-                        shot.setY(shotY-1);
+                        //shot.setY(shotY-1);
                     }else{ //Impacto
-                        shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
+                        //shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
                         var ii = new ImageIcon(explImg);
                         alien.setImage(ii.getImage());
                         //alien.setDying(true);
@@ -315,8 +317,10 @@ public class Board extends JPanel {
                     }
                 }
             }
-        }
 
+        }
+        if(shot.isVisible())
+            shot.setY(shotY-1);
     }
     /**
      * Actualiza los el estado de los aliens,
@@ -325,6 +329,7 @@ public class Board extends JPanel {
      * Si los alienígenas alcanzan el borde inferior del tablero, el juego termina y se nos muestra por pantalla el mensaje "Invasion!"
      * */
     public void update_aliens(){
+
         for (Alien alien : this.aliens) {
 
             int x = alien.getX();
