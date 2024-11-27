@@ -296,11 +296,11 @@ public class Board extends JPanel {
             int alienY = alien.getY();
 
             if (alien.isVisible() && this.shot.isVisible()) { //Si el alien esta vivo y el disparo ha salido
-                if(shotY-1==0){ //Vemos si el disparo ha llegado al final del tablero y lo destruimos
+                if(shotY-4<=0){ //Vemos si el disparo ha llegado al final del tablero y lo destruimos
                     //shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
                     shot.setVisible(false);
                     //shot.die();
-                }else if(shotY-1>alienY+Commons.ALIEN_HEIGHT || shotY-1<alienY){ //El disparo aun esta antes del alien o ya lo ha sobrepasado, hacemos que avance uno
+                }else if(shotY-4>alienY+Commons.ALIEN_HEIGHT || shotY-4<alienY){ //El disparo aun esta antes del alien o ya lo ha sobrepasado, hacemos que avance uno
                     //shot.setY(shotY-1);
                 }else{ //El disparo esta dentro de las coord Y del alien, ahora vemos las X
                     if(shotX < alienX || shotX > alienX + Commons.ALIEN_WIDTH) { //El disparo esta a la derecha o izquierda del alien
@@ -320,7 +320,7 @@ public class Board extends JPanel {
 
         }
         if(shot.isVisible())
-            shot.setY(shotY-1);
+            shot.setY(shotY-4);
     }
     /**
      * Actualiza los el estado de los aliens,
@@ -378,8 +378,8 @@ public class Board extends JPanel {
 
                 alien.act(direction);
             }*/
-            //Miramos si el alien es visible y ha llegado al borde derecho
-            if(alien.isVisible() && x+direction>Commons.BOARD_WIDTH){
+            //Miramos si el alien es visible y ha llegado al borde derecho Ademas tenemos en cuenta el ancho
+            if(alien.isVisible() && x+direction>Commons.BOARD_WIDTH- Commons.BORDER_RIGHT){
                 //Cambiamos la direccion de todos los aliens y los bajamos de nivel
                 Iterator<Alien> it = this.aliens.iterator();
                 direction=-1;
@@ -387,7 +387,7 @@ public class Board extends JPanel {
                     Alien alieniT = it.next();
                     alieniT.setY(alieniT.getY() + Commons.GO_DOWN); //Se baja al alien un nivel
                 }
-            }else if ( alien.isVisible() && x+direction<0){ //Miramos si ha llegado al borde izq
+            }else if ( alien.isVisible() && x+direction<Commons.BORDER_LEFT){ //Miramos si ha llegado al borde izq
                 Iterator<Alien> it = this.aliens.iterator();
                 direction=1;
                 while (it.hasNext()) {
@@ -398,7 +398,7 @@ public class Board extends JPanel {
                 alien.act(direction);
             }
             //Controlamos si un alien visible ha llegado al fin del juego
-            if(alien.isVisible() && alien.getY()>=Commons.GROUND){
+            if(alien.isVisible() && alien.getY()>=Commons.GROUND-Commons.ALIEN_HEIGHT){
                 inGame = false;
                 message = "Invasion!";  //FALTA AÑADIR UN FINAL DEL JUEGO, PARAR EL RELOJ Y TAL
             }
