@@ -27,7 +27,7 @@ public class Alien extends Sprite {
      * */
     private void initAlien(int x, int y) {
 
-        this.x = this.IniciarEnMargenX(x);
+        this.x = this.IniciarEnMargenX(x); //Modificada la forma de comprobar las coordenadas, lo hacemos mediante llamada a los metodos en Sprite
         this.y = this.IniciarEnMargenY(y);
 
         bomb = new Bomb(x, y);
@@ -44,7 +44,7 @@ public class Alien extends Sprite {
      * */
     public void act(int direction) {
 
-        this.x += direction;
+        this.x += direction; //Modificado de forma que se le suma solo la direccion a la X actual
     }
 
     /**
@@ -82,7 +82,7 @@ public class Alien extends Sprite {
 
             setDestroyed(true);
 
-            this.x = this.IniciarEnMargenX(x);
+            this.x = this.IniciarEnMargenX(x);  //Modificada la forma de comprobar las coordenadas, lo hacemos mediante llamada a los metodos en Sprite
             this.y = this.IniciarEnMargenY(y);
 
             var bombImg = "src/main/resources/images/bomb.png";

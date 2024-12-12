@@ -90,7 +90,7 @@ public class Board extends JPanel {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
 
-                var alien = new Alien(Commons.ALIEN_INIT_X + 18 * j,    //Cambiada la i por una j y el Alien_init_Y por Alien_Init_X
+                var alien = new Alien(Commons.ALIEN_INIT_X + 18 * j,    //Cambiado el Alien_init_Y por Alien_Init_X
                         Commons.ALIEN_INIT_Y + 18 * i);
                 this.aliens.add(alien);
             }
@@ -98,7 +98,7 @@ public class Board extends JPanel {
 
         this.player = new Player();
         this.shot = new Shot();
-        shot.setVisible(false);
+        shot.setVisible(false); //Añadido que el disparo se ponga como false tras inicializarse por primera vez
     }
     /**
      * Genera gráficamente los aliens en la interfaz en las posiciones indicadas.
@@ -253,7 +253,7 @@ public class Board extends JPanel {
      * activa la animación de explosión del alienígena, lo elimina del tablero y aumenta en uno el contador de alienígenas derribados (deaths) en uno.
      * */
     public void update_shots() {
-        /*if (this.shot.isVisible()) {
+        if (this.shot.isVisible()) {
 
             int shotX = this.shot.getX();
             int shotY = this.shot.getY();
@@ -272,8 +272,10 @@ public class Board extends JPanel {
                         var ii = new ImageIcon(explImg);
                         alien.setImage(ii.getImage());
                         alien.setDying(true);
-                        deaths--;
+                        deaths++; //Modificado a sumarle una muerte
                         this.shot.die();
+                        shot.setVisible(false); //Hacemos que el disparo sea no visible
+                        alien.setVisible(false); //Ponemos el alien como no visible
                     }
                 }
             }
@@ -287,40 +289,7 @@ public class Board extends JPanel {
                 this.shot.setY(y);
             }
 
-        }*/
-        int shotX = this.shot.getX();
-        int shotY = this.shot.getY();
-
-        for (Alien alien : this.aliens) {
-            int alienX = alien.getX();
-            int alienY = alien.getY();
-
-            if (alien.isVisible() && this.shot.isVisible()) { //Si el alien esta vivo y el disparo ha salido
-                if(shotY-4<=0){ //Vemos si el disparo ha llegado al final del tablero y lo destruimos
-                    //shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
-                    shot.setVisible(false);
-                    //shot.die();
-                }else if(shotY-4>alienY+Commons.ALIEN_HEIGHT || shotY-4<alienY){ //El disparo aun esta antes del alien o ya lo ha sobrepasado, hacemos que avance uno
-                    //shot.setY(shotY-1);
-                }else{ //El disparo esta dentro de las coord Y del alien, ahora vemos las X
-                    if(shotX < alienX || shotX > alienX + Commons.ALIEN_WIDTH) { //El disparo esta a la derecha o izquierda del alien
-                        //shot.setY(shotY-1);
-                    }else{ //Impacto
-                        //shot.setY(shotY-1); //Simplemente le restamos uno para que de igual que el test
-                        var ii = new ImageIcon(explImg);
-                        alien.setImage(ii.getImage());
-                        //alien.setDying(true);
-                        alien.setVisible(false); //Ponemos el alien como no visible
-                        deaths++; //Modificado a sumarle una muerte
-                        //this.shot.die();
-                        shot.setVisible(false); //Hacemos que el disparo sea no visible
-                    }
-                }
-            }
-
         }
-        if(shot.isVisible())
-            shot.setY(shotY-4);
     }
     /**
      * Actualiza los el estado de los aliens,

@@ -24,7 +24,7 @@ public class Player extends Sprite {
         width = ii.getImage().getWidth(null);
         setImage(ii.getImage());
 
-        int START_X = 169;
+        int START_X = 169; //Modificado el valor de inicio de X
         setX(START_X);
 
         int START_Y = 280;
@@ -37,10 +37,11 @@ public class Player extends Sprite {
      * lo mantendrá quieto en el borde.
      * */
     public void act() {
-
+        //Metodo modificado
         if(x+dx<Commons.BOARD_WIDTH && x+dx>0){ //Si sumandole a la posicion el dx no se sale de los margenes, se le asigna
             x+=dx;
         }
+
     }
     /**
      * Comprueba qué tecla está pulsada y:
@@ -55,7 +56,7 @@ public class Player extends Sprite {
 
         if (key == KeyEvent.VK_LEFT) {
 
-            dx = -2;
+            dx = -2;    //Modificado a -2
         }
 
         if (key == KeyEvent.VK_RIGHT) {
