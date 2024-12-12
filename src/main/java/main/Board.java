@@ -364,7 +364,7 @@ public class Board extends JPanel {
 
         for (Alien alien : this.aliens) {
 
-           /* int shot = generator.nextInt(15);
+            int shot = generator.nextInt(15);
             Alien.Bomb bomb = alien.getBomb();
 
             if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
@@ -388,8 +388,9 @@ public class Board extends JPanel {
 
                     var ii = new ImageIcon(explImg);
                     this.player.setImage(ii.getImage());
-                    this.player.setDying(false);
+                    this.player.setDying(true); //Cambiado a true
                     bomb.setDestroyed(true);
+                    message = "Game over!"; //Añadido mensaje de fin del juego
                 }
             }
 
@@ -399,37 +400,7 @@ public class Board extends JPanel {
 
                 if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
 
-                    bomb.setDestroyed(false);
-                }
-            }*/
-            Alien.Bomb bomb = alien.getBomb();
-            //Si el alien es visible y su bomba esta destruida, y el numero random es acertado, crea una bomba para ese alien
-            if(alien.isVisible() && bomb.isDestroyed() && RandomChance(generator)){
-                bomb.setDestroyed(false);
-                bomb.setX(alien.getX());
-                bomb.setY(alien.getY());
-            }
-            if(bomb.isVisible()) { //Si la bomba es visible (No ha sido destruida)
-                //Guardamos las variables por comodidad
-                int bombX = bomb.getX();
-                int bombY = bomb.getY();
-                int playerX = this.player.getX();
-                int playerY = this.player.getY();
-
-                if (bombY + 6 + 1 >= Commons.GROUND) { //Si la bomba ha llegado al suelo se destruye (Le sumamos 6 por el alto de la bomba)
-                    bomb.setDestroyed(true);
-                } else if (bombY + 6 + 1 <= playerY) { //Si la bomba aun no ha llegado al jugador, sigue avanzando
-                    bomb.setY(bombY+1);
-                } else { //La bomba ha llegado a la altura del jugador, habra que ver las coords X para saber si puede impactar en el o no
-                    if(bombX>playerX + Commons.PLAYER_WIDTH || bombX<playerX){ //La bomba esta fuera del rango x del jugador
-                        bomb.setY(bombY+1);
-                    }else{
-                        var ii = new ImageIcon(explImg);
-                        this.player.setImage(ii.getImage());
-                        this.player.setDying(true); //Puesto como true
-                        bomb.setDestroyed(true);
-                        message = "Game over!"; //Añadido mensaje de fin del juego
-                    }
+                    bomb.setDestroyed(true); //Cambiado a true
                 }
             }
         }

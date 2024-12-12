@@ -107,7 +107,7 @@ public class BoardTest {
         assertEquals(true, bomb.isDestroyed());
         //assertEquals(board.getPlayer().isDying(), false);
         assertEquals(0,bomb.getX());
-        assertEquals(290,bomb.getY());
+        assertEquals(291,bomb.getY());
     }
 
     //La bomba alcanza al jugador
