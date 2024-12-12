@@ -303,9 +303,9 @@ public class Board extends JPanel {
 
             int x = alien.getX();
 
-            /*if (x <= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
+            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) { //Cambiado a mayor que
 
-                direction = 0;
+                direction = -1; //Cambiado a -1
 
                 Iterator<Alien> i1 = this.aliens.iterator();
 
@@ -325,7 +325,7 @@ public class Board extends JPanel {
                 while (i2.hasNext()) {
 
                     Alien a = i2.next();
-                    a.setX(a.getY() + Commons.GO_DOWN);
+                    a.setY(a.getY() + Commons.GO_DOWN); //Cambiado el setX por SetY
                 }
             }
         }
@@ -346,30 +346,6 @@ public class Board extends JPanel {
                 }
 
                 alien.act(direction);
-            }*/
-            //Miramos si el alien es visible y ha llegado al borde derecho Ademas tenemos en cuenta el ancho
-            if(alien.isVisible() && x+direction>Commons.BOARD_WIDTH- Commons.BORDER_RIGHT){
-                //Cambiamos la direccion de todos los aliens y los bajamos de nivel
-                Iterator<Alien> it = this.aliens.iterator();
-                direction=-1;
-                while (it.hasNext()) {
-                    Alien alieniT = it.next();
-                    alieniT.setY(alieniT.getY() + Commons.GO_DOWN); //Se baja al alien un nivel
-                }
-            }else if ( alien.isVisible() && x+direction<Commons.BORDER_LEFT){ //Miramos si ha llegado al borde izq
-                Iterator<Alien> it = this.aliens.iterator();
-                direction=1;
-                while (it.hasNext()) {
-                    Alien alieniT = it.next();
-                    alieniT.setY(alieniT.getY() + Commons.GO_DOWN);
-                }
-            }else{
-                alien.act(direction);
-            }
-            //Controlamos si un alien visible ha llegado al fin del juego
-            if(alien.isVisible() && alien.getY()>=Commons.GROUND-Commons.ALIEN_HEIGHT){
-                inGame = false;
-                message = "Invasion!";  //FALTA AÑADIR UN FINAL DEL JUEGO, PARAR EL RELOJ Y TAL
             }
         }
 

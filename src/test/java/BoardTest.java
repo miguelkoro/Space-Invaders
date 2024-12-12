@@ -197,10 +197,10 @@ public class BoardTest {
      */
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value={
-            "0,100,true,-1,0,115,1,true,''",
-            "358,100,true,1,358,115,-1,true,''",
-            "0,275,true,-1,0,290,1,false,'Invasion!'",
-            "358,275,true,1,358,290,-1,false,'Invasion!'",
+            "0,100,true,-1,1,115,1,true,''",
+            "358,100,true,1,357,115,-1,true,''",
+            "0,275,true,-1,1,290,1,false,'Invasion!'",
+            "358,275,true,1,357,290,-1,false,'Invasion!'",
 
 
     })
