@@ -408,16 +408,6 @@ public class Board extends JPanel {
     }
 
     /**
-     * METODO PARA SACAR UN NUMERO ALEATORIO Y SI ES IGUAL A CHANCE DEVOLVER TRUE
-     */
-    public boolean RandomChance(Random generator){
-        //var generator = new Random();
-        int shot = generator.nextInt(15);
-        return shot==Commons.CHANCE;
-    }
-
-
-    /**
      * FUNCIÓN RELACIONADA CON LA GESTIÓN DE INTERFAZ. NO ES NECESARIO PROBARLA.
      * */
     private void doGameCycle() {
